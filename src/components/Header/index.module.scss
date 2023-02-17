@@ -1,0 +1,54 @@
+.header {
+    position: fixed;
+    background-color: white;
+    z-index: 999;
+    width: 100%;
+    padding: 15px 0px;
+    &__main {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-bottom: 1px solid #e2e1e1ab;
+    }
+    &__logo {
+        img {
+            width: 120px;
+            padding-right: 90px;
+        }
+    }
+    &__menu {
+        .nav__list {
+            display: flex;
+            list-style: none;
+            .nav__item {
+                display: flex;
+                button {
+                    font-weight: bolder;
+                    font-size: 15px;
+                    background: transparent;
+                    border:0px;
+                    cursor: pointer;
+                    text-align: center;
+                    border-radius: 40px;
+                    transition: box-shadow 0.2s ease;
+                    padding: 10px;
+                    &:hover {
+                        background-color: #EBEBEB;
+                    }
+                    img{
+                        width: 50%;
+                    }
+                    ul{
+                        display: flex;
+                    }
+                }
+            }
+        }
+    }
+    &__filter{
+        .nav__list{
+            display: flex;
+            list-style: none;
+        }
+    }
+}

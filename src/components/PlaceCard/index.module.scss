@@ -1,0 +1,45 @@
+.wrapper {
+    width: 250px;
+    .thumbnail__wrapper {
+        background: lightgray;
+        height: 150px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        position: relative;
+        overflow: hidden;
+        img {
+            width: 100%;
+        }
+        .btn__whishlist {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: none;
+            border: none;
+            img {
+                width: 15px;
+            }
+        }
+    }
+    .content {
+        display: flex;
+        .metadata {
+            width: 70%;
+            b {
+                font-weight: 600;
+            }
+            p {
+                font-size: 12px;
+                margin-bottom: 10px;
+                font-weight: 300;
+            }
+        }
+        .rate {
+            width: 25%;
+            text-align: right;
+            span {
+                font-size: 11px;
+            }
+        }
+    }
+}

@@ -1,0 +1,11 @@
+@import "../../styles/helpers/variables";
+.title__page {
+    text-align: center;
+    position: relative;
+    padding-bottom: 20px;
+    margin: 20px 0px;
+    h1 {
+        font-size: 30px;
+        font-weight: 600;
+    }
+}

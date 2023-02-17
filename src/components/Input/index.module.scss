@@ -1,0 +1,18 @@
+.input__wrapper {
+    margin-bottom: 20px;
+    label {
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 15px;
+        display: block;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+    input {
+        padding: 15px;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #b4b4b4;
+        border-radius: 3px;
+    }
+}

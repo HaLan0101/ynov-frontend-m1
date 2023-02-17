@@ -1,0 +1,24 @@
+// @mixin displayFlex($justifyContent, $alignItems){
+//     display: flex;
+//     justify-content: $justifyContent;
+//     align-items: $alignItems;
+// }
+.input__wrapper {
+    margin-bottom: 20px;
+    //@include displayFlex( space-between, center);
+    label{
+        font-size: 20px;
+        color: $mainColor;
+    }
+    input {
+        border-radius: 4px;
+        color: $mainColor;
+        &::focus {
+            border: 1px solid black;
+            transition: 0.3s all;
+        }
+    }
+    @media (max-width: 580px) {
+        margin-bottom: 10px;
+    }
+}
