@@ -1,4 +1,4 @@
-import {useContext,useState} from 'react';
+import {useContext,useState, useEffect} from 'react';
 import { useRouter } from 'next/router';
 import WishlistContext from '../../context/WishlistContext';
 import Link from "next/link";
@@ -9,21 +9,152 @@ import Language from "../../../public/language.svg";
 import Menu from "../../../public/menu.svg";
 import Account from "../../../public/account.svg";
 import Filter from "../../../public/filter.svg";
+import Modal from "../../components/Modal/index";
+import Input from "../../components/Input/index";
+import Button from "../../components/Button/index";
+import typePlaceService from "../../services/typePlace.service";
 const Index = () => {
+  const [showModal,setShowModal]= useState(false);
   const router = useRouter();
   const { wishlist } = useContext(WishlistContext);
   const [search, setSearch] = useState("");
-  
+  const [typePlaces, setTypePlaces] = useState();
+  const [filter, setFilter] = useState({
+    prixMax:"",
+    prixMin:"",
+    capaciteMax:"",
+    capaciteMin:"",
+    type:""
+  });
+  const submitForm = (e) =>{
+    if(filter.capaciteMax == "" && filter.capaciteMin == "" && filter.type == "")
+    {
+      router.push({ pathname: "/filter", query: { "price": `${filter.prixMin}-${filter.prixMax}`} });
+    }
+    else if(filter.prixMax == "" && filter.prixMin == "" && filter.type == "")
+    {
+      router.push({ pathname: "/filter", query: { "capacity": `${filter.capaciteMin}-${filter.capaciteMax}`} });
+    }
+    else if(filter.prixMax =="" && filter.prixMin == "" && filter.capaciteMax == "" && filter.capaciteMin == "")
+    {
+      router.push({ pathname: "/filter", query: { "types": `${filter.type}`} });
+    }
+    else if(filter.prixMax == "" && filter.prixMin == "")
+    {
+      router.push({ pathname: "/filter", query: { "capacity": `${filter.capaciteMin}-${filter.capaciteMax}`, "types": `${filter.type}`} });
+    }
+    else if(filter.capaciteMax == "" && filter.capaciteMin == "")
+    {
+      router.push({ pathname: "/filter", query: { "price": `${filter.prixMin}-${filter.prixMax}`, "types": `${filter.type}`} });
+    }
+    else if(filter.type == "")
+    {
+      router.push({ pathname: "/filter", query: { "price": `${filter.prixMin}-${filter.prixMax}`, "capacity": `${filter.capaciteMin}-${filter.capaciteMax}`} });
+    }
+    else if(filter.prixMax !="" && filter.prixMin != "" && filter.capaciteMax != "" && filter.capaciteMin != "" && filter.type != "")
+    {
+      router.push({ pathname: "/filter", query: { "price": `${filter.prixMin}-${filter.prixMax}`, "capacity": `${filter.capaciteMin}-${filter.capaciteMax}`, "types": `${filter.type}`} });
+    }
+  }
+
+  const handleFilter = (e) => {
+    setFilter({ ...filter, [e.target.name]: e.target.value })
+  }
+
   const handleInput = (e) => {
     setSearch(e.target.value);
   }
   const onClickSubmit = (e) => {
     router.push({ pathname: "/search", query: { "search": `${search}` } });
   }
+
+  const activeModal = (e) =>{
+    setShowModal(true);
+  }
+
+  useEffect(() => {
+    typePlaceService.getTypePlaces()
+      .then((typePlace) => {
+        console.log(typePlace);
+        setTypePlaces(typePlace);
+      })
+      .catch(err => console.log(err))
+  }, []);
   console.log(wishlist);
 
   return (
     <header className={styles.header}>
+      <Modal title="Filtre" isActive={showModal} closeFunction={()=>setShowModal(!showModal)}>
+        <form className={styles.form__filter}>
+          <p>Prix</p>
+          <div className={styles.form__input}>
+              <Input
+              titleLabel="Min"
+              inputType="number"
+              inputPlaceholder="Valeur minimum"
+              inputName="prixMin"
+              inputValue={filter.prixMin || ""}
+              inputOnChange={(e) => {
+                handleFilter(e);
+              }}
+              />
+              <Input
+              titleLabel="Max"
+              inputType="number"
+              inputPlaceholder="Valeur maximum"
+              inputName="prixMax"
+              inputValue={filter.prixMax || ""}
+              inputOnChange={(e) => {
+                handleFilter(e);
+              }}
+              />
+          </div>
+          <p>Capacité</p>
+          <div className={styles.form__input}>
+              <Input
+              titleLabel="Min"
+              inputType="number"
+              inputPlaceholder="Valeur minimum"
+              inputName="capaciteMin"
+              inputValue={filter.capaciteMin || ""}
+              inputOnChange={(e) => {
+                handleFilter(e);
+              }}
+              />
+              <Input
+              titleLabel="Max"
+              inputType="number"
+              inputPlaceholder="Valeur maximum"
+              inputName="capaciteMax"
+              inputValue={filter.capaciteMax || ""}
+              inputOnChange={(e) => {
+                handleFilter(e);
+              }}
+              />
+          </div>
+          <p>Type</p>
+          <div className={styles.form__input}>
+            <select name="type" id="" value={filter.type || ""} onChange={(e) => handleFilter(e)}>
+              <option value="">Type</option>
+              {
+                typePlaces && typePlaces.map((item) => (
+                  <option value={item._id}>{item.name}</option>
+                ))
+              }
+            </select>
+          </div>
+          <div className={styles.form__input}>
+            <Button
+              title="submit"
+              handleClick={(e) => {
+                submitForm(e)
+              }}
+              type="submit"
+              btnClass="btn btn__primary"
+            />
+          </div>
+        </form>
+      </Modal>
       <div className={styles.header__main}>
         <div className={styles.header__logo}>
           <Link href="/">
@@ -121,7 +252,7 @@ const Index = () => {
             <p>Tiny houses</p>
           </li>
           <li className={styles.nav__item}>
-            <div className={styles.nav__filter}>
+            <div className={styles.nav__filter} onClick={activeModal}>
               <img src={Filter.src} alt="filter" />
               <p>Filtres</p>
             </div>

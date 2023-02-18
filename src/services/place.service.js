@@ -8,5 +8,10 @@ export default {
       return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/place/search/${search}`, {
         method: "GET"
       }).then(res => res.json())
-  }
+    },
+    getFilter(filter) {
+      return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/place/filter/${filter}`, {
+        method: "GET"
+      }).then(res => res.json())
+    }
 }

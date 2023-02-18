@@ -83,4 +83,18 @@
             }
         }
     }
+    .form{
+        &__filter{
+            p{
+                font-size: 30px;
+                font-weight: 500;
+                padding-bottom: 20px;
+            }
+        }
+        &__input{
+            display: flex;
+            justify-content: space-around;
+            padding-bottom: 30px;
+        }
+    }
 }

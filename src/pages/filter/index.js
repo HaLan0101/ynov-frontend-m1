@@ -6,18 +6,19 @@ import placeService from "../../services/place.service";
 const Index = () => {
     const router = useRouter();
     const [places, setPlaces] = useState();
-    const { search } = router.query;
+    const { filter } = router.query;
+    console.log("here : "+filter)
     useEffect(() => {
-        placeService.getSearch(search)
+        placeService.getFilter(filter)
         .then((place) => {
             setPlaces(place);
         })
         .catch(err => console.log(err))
-    }, [search]);
+    }, [filter]);
 
   return (
     <main>
-        <TitlePage title="Search" />
+        <TitlePage title="Filter" />
         <PlaceGrid places={places} />
     </main>
   )

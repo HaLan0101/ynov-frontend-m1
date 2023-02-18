@@ -5,18 +5,29 @@
     height: 100%;
     width: 100%;
     background: #00000063;
+    z-index: 9;
 }
   
 .modal {
+    z-index: 10;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: black;
+    background: white;
     width: 40%;
     padding: 20px;
-    border-radius: 4px;
-    color: white;
+    border-radius: 20px;
+    color: black;
+    &__header{
+        display: flex;
+        align-items: center;
+        font-size: 30px;
+        font-weight: 600;
+        h2{
+            padding-left: 200px;
+        }
+    }
 }
   
   
