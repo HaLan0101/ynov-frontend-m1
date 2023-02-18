@@ -1,4 +1,28 @@
-.footer__main {
-    background: black;
-    padding: 20px;
+.footer{
+    position: fixed;
+    bottom: 0;
+    background: white;
+    z-index: 999;
+    width: 100%;
+    border: 1px solid #e2e1e1ab; 
+    &__main{
+        display: flex;
+        font-size: 13px;
+        justify-content: space-around;
+        align-items: center;
+    }
+    &__list{
+        display: flex;
+    }
+    &__item{
+        display: flex;
+        align-items: center;
+        padding-right: 15px;
+    }
+    &__right{
+        font-weight: 600;
+        img{
+            width: 20%;
+        }
+    }
 }

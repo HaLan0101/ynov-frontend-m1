@@ -9,6 +9,7 @@
         justify-content: space-around;
         align-items: center;
         border-bottom: 1px solid #e2e1e1ab;
+        padding-bottom: 20px;
     }
     &__logo {
         img {
@@ -46,9 +47,40 @@
         }
     }
     &__filter{
+        padding-top: 20px;
+        padding-bottom: 10px;
+        display: flex;
         .nav__list{
             display: flex;
             list-style: none;
+            justify-content: space-around ;
+            .nav__item{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                p{
+                    font-size: 10px;
+                }
+                img{
+                    width: 30%;
+                    padding-bottom: 10px;
+                }
+                .nav__filter{
+                    display: flex;
+                    align-items: center;
+                    border-radius: 10px;
+                    border: 1px solid black;                    img{
+                    width: 25%;
+                    padding-right: 10px;
+                    }
+                    p{
+                        font-size: 15px;
+                    }
+                    img{
+                        padding: 10px;
+                    }
+                }
+            }
         }
     }
 }

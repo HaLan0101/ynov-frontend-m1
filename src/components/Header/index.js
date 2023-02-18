@@ -8,6 +8,7 @@ import Search from "../Search/index";
 import Language from "../../../public/language.svg";
 import Menu from "../../../public/menu.svg";
 import Account from "../../../public/account.svg";
+import Filter from "../../../public/filter.svg";
 const Index = () => {
   const router = useRouter();
   const { wishlist } = useContext(WishlistContext);
@@ -104,7 +105,26 @@ const Index = () => {
             <p>Avec vue</p>
           </li>
           <li className={styles.nav__item}>
-            <button>hello</button>
+            <img src="https://a0.muscache.com/pictures/78ba8486-6ba6-4a43-a56d-f556189193da.jpg" alt="icon" />
+            <p>Grandes demeures</p>
+          </li>
+          <li className={styles.nav__item}>
+            <img src="https://a0.muscache.com/pictures/aaa02c2d-9f0d-4c41-878a-68c12ec6c6bd.jpg" alt="icon" />
+            <p>Fermes</p>
+          </li>
+          <li className={styles.nav__item}>
+            <img src="https://a0.muscache.com/pictures/c5a4f6fc-c92c-4ae8-87dd-57f1ff1b89a6.jpg" alt="icon" />
+            <p>Wow !</p>
+          </li>
+          <li className={styles.nav__item}>
+            <img src="https://a0.muscache.com/pictures/35919456-df89-4024-ad50-5fcb7a472df9.jpg" alt="icon" />
+            <p>Tiny houses</p>
+          </li>
+          <li className={styles.nav__item}>
+            <div className={styles.nav__filter}>
+              <img src={Filter.src} alt="filter" />
+              <p>Filtres</p>
+            </div>
           </li>
         </ul>
       </div>

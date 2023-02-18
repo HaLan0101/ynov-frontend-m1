@@ -6,14 +6,6 @@ export default WishlistContext;
 
 export const WishlistContextProvider = ({ children }) => {
 
-    // useEffect(() =>{
-    //     setWishlist(localStorage.getItem('wishlist'));
-    //     wishlistService.getUserWishlist.then((wishlist) =>{
-    //         setWishlist(wishlist);
-    //     })
-    // })
-
-  
   const [wishlist, setWishlist] = useState([]);
 
   const removePlaceWishlist = (place) => {
@@ -27,7 +19,6 @@ export const WishlistContextProvider = ({ children }) => {
     if(wishlist.indexOf(place) == -1){
         setWishlist([...wishlist, place])
     }
-    // ...
   }
 
   const deleteWishlist = () => {
