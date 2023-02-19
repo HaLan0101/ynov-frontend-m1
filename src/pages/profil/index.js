@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import { useRouter } from 'next/router';
 import TitlePage from "../../components/TitlePage";
 import styles from "./index.module.scss";
 import Button from "../../components/Button";
@@ -7,7 +8,7 @@ import Input from "../../components/Input";
 import userService from '../../services/user.service';
 import WithAuth from '../../HOC/WithAuth';
 const Index = () => {
-
+  const router = useRouter();
   const [userForm, setUserForm] = useState();
   const [showModal,setShowModal]= useState(false);
   const [user, setUser] = useState();
@@ -39,13 +40,17 @@ const Index = () => {
       })
       .catch(err => console.log(err))
   }, []);
+  const logout=() =>{
+    localStorage.removeItem('token');
+    router.push("/");
+  }
   return (
     <>
     {
       user && (
         <>
-          <TitlePage title="Mon profil"/>
           <div className={styles.wrapper}>
+          <TitlePage title="Mon profil"/>
             <Modal isActive={showModal} closeFunction={()=>setShowModal(!showModal)}>
               <TitlePage title="Modifier"/>
               <form className="form__profil" onSubmit={(e) => submitUpdate(e)}>
@@ -95,6 +100,7 @@ const Index = () => {
               type="button"
               btnClass="btn btn__primary"
             />
+            <Button title="Logout" type="button" btnClass="btn btn__black" handleClick={() => logout()}></Button>
           </div>
         </>
       )

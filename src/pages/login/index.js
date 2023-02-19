@@ -12,7 +12,6 @@ const Index = () => {
   const router = useRouter();
   const [message, setMessage] = useState(null);
   const [type, setType] = useState(null);
-  console.log(router);
   const [userForm, setUserForm] = useState({
     email: "",
     password: ""
@@ -43,7 +42,7 @@ const Index = () => {
   }
 
   return (
-    <div className="page__register">
+    <div className={styles.page__login}>
       <TitlePage title="Login your account"/>
       <form className={styles.form__login}>
         <Input

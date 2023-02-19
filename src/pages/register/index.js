@@ -23,7 +23,6 @@ const Index = () => {
     e.preventDefault(e);
     authService.register(userForm)
     .then(user => {
-      console.log(user);
       localStorage.setItem('token',JSON.stringify(user.token));
       if(!user.token){
         console.log(err);
@@ -34,7 +33,7 @@ const Index = () => {
   }
 
   return (
-    <div className='page__register'>
+    <div className={styles.page__register}>
       <TitlePage title="Create your account" />
       <form className={styles.form__register}>
         <Input

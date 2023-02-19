@@ -69,9 +69,10 @@
                     display: flex;
                     align-items: center;
                     border-radius: 10px;
-                    border: 1px solid black;                    img{
-                    width: 25%;
-                    padding-right: 10px;
+                    border: 1px solid black;                    
+                    img{
+                        width: 25%;
+                        padding-right: 10px;
                     }
                     p{
                         font-size: 15px;
@@ -95,6 +96,13 @@
             display: flex;
             justify-content: space-around;
             padding-bottom: 30px;
+        }
+    }
+    .modalAccount{
+        padding: 10px;
+        border-radius: 20px;
+        &:hover{
+            background-color: #EBEBEB;
         }
     }
 }

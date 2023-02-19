@@ -10,12 +10,30 @@ import Menu from "../../../public/menu.svg";
 import Account from "../../../public/account.svg";
 import Filter from "../../../public/filter.svg";
 import Modal from "../../components/Modal/index";
+import ModalAccount from "../../components/ModalAccount/index";
 import Input from "../../components/Input/index";
 import Button from "../../components/Button/index";
 import typePlaceService from "../../services/typePlace.service";
+import Notification from "../../components/Notification";
+import AuthService from "../../services/auth.service";
 const Index = () => {
   const [showModal,setShowModal]= useState(false);
+  const [showModalLogin,setShowModalLogin]= useState(false);
+  const [showModalRegister,setShowModalRegister]= useState(false);
+  const [showModalAccount,setShowModalAccount]= useState(false);
   const router = useRouter();
+  const [type, setType] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [userForm, setUserForm] = useState({
+    email: "",
+    password: ""
+  });
+  const [userFormRegister, setUserFormRegister] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: ""
+  })
   const { wishlist } = useContext(WishlistContext);
   const [search, setSearch] = useState("");
   const [typePlaces, setTypePlaces] = useState();
@@ -72,6 +90,20 @@ const Index = () => {
     setShowModal(true);
   }
 
+  const activeModalLogin = (e) =>{
+    setShowModalAccount(!showModalAccount);
+    setShowModalLogin(true);
+  }
+
+  const activeModalRegister = (e) =>{
+    setShowModalAccount(!showModalAccount);
+    setShowModalRegister(true);
+  }
+
+  const activeModalAccount = (e) =>{
+    setShowModalAccount(true);
+  }
+
   useEffect(() => {
     typePlaceService.getTypePlaces()
       .then((typePlace) => {
@@ -82,8 +114,153 @@ const Index = () => {
   }, []);
   console.log(wishlist);
 
+  const handleInputLogin = (e) => {
+    setUserForm({ ...userForm, [e.target.name]: e.target.value });
+  }
+
+  const submitFormLogin = (e) => {
+    e.preventDefault();
+    AuthService.login(userForm)
+      .then((data) => {
+        if (!data.token) {
+          setMessage(data.message);
+          setType("error")
+          return false;
+        } 
+        localStorage.setItem('token', data.token);
+        setShowModalLogin(!showModalLogin);
+        router.push("/profil");
+      })
+      .catch(
+        (err) => {
+          console.log(err);
+          setMessage(err);
+        }
+      )
+  }
+
+  const handleInputRegister = (e) => {
+    setUserFormRegister({ ...userFormRegister, [e.target.name]: e.target.value })
+  }
+
+  const submitFormRegister = (e) => {
+    e.preventDefault(e);
+    AuthService.register(userFormRegister)
+    .then((user) => {
+      localStorage.setItem('token',JSON.stringify(user.token));
+      if(!user.token){
+        setMessage("error");
+        setType("error")
+        return false;
+      }
+      setShowModalRegister(!showModalRegister);
+      router.push(`/login`);
+    })
+    .catch(err => {
+      console.log(err);
+      setMessage(err);
+    })
+  }
   return (
     <header className={styles.header}>
+      <ModalAccount title="Filtre" isActive={showModalAccount} closeFunction={()=>setShowModalAccount(!showModalAccount)}>
+        <p className={styles.modalAccount} onClick={activeModalRegister}>Inscription</p>
+        <p className={styles.modalAccount} onClick={activeModalLogin}>Connexion</p>
+      </ModalAccount>
+      <Modal title="Connexion" isActive={showModalLogin} closeFunction={()=>setShowModalLogin(!showModalLogin)}>
+          <div className="page__login">
+          <form className={styles.form__login}>
+            <Input
+              titleLabel="email"
+              inputType="email"
+              inputPlaceholder="email"
+              inputName="email"
+              inputValue={userForm.email || ""}
+              inputOnChange={(e) => {
+                handleInputLogin(e);
+              }}
+            />
+            <Input
+              titleLabel="password"
+              inputType="password"
+              inputPlaceholder="password"
+              inputName="password"
+              inputValue={userForm.password || ""}
+              inputOnChange={(e) => {
+                handleInputLogin(e);
+              }}
+            />
+            <Button
+              title="submit"
+              handleClick={(e) => {
+                submitFormLogin(e);
+              }}
+              type="submit"
+              btnClass="btn btn__primary"
+            />
+            {
+              message && <Notification type={type} message={message}/>
+            }
+          </form>
+        </div>
+      </Modal>
+      <Modal title="Inscription" isActive={showModalRegister} closeFunction={()=>setShowModalRegister(!showModalRegister)}>
+          <div className='page__register'>
+            <form className={styles.form__register}>
+              <Input
+                titleLabel="Firstname"
+                inputType="text"
+                inputPlaceholder="firstname"
+                inputName="firstName"
+                inputValue={userFormRegister.firstName || ""}
+                inputOnChange={(e) => {
+                  handleInputRegister(e);
+                }}
+              />
+              <Input
+                titleLabel="Lastname"
+                inputType="text"
+                inputPlaceholder="lastname"
+                inputName="lastName"
+                inputValue={userFormRegister.lastName || ""}
+                inputOnChange={(e) => {
+                  handleInputRegister(e);
+                }}
+              />
+              <Input
+                titleLabel="Email"
+                inputType="email"
+                inputPlaceholder="email"
+                inputName="email"
+                inputValue={userFormRegister.email || ""}
+                inputOnChange={(e) => {
+                  handleInputRegister(e);
+                }}
+              />
+              <Input
+                titleLabel="Password"
+                inputType="password"
+                inputPlaceholder="password"
+                inputName="password"
+                inputValue={userFormRegister.password || ""}
+                inputOnChange={(e) => {
+                  handleInputRegister(e);
+                }}
+              />
+              <Button
+                title="submit"
+                handleClick={(e) => {
+                  submitFormRegister(e)
+                }}
+                type="submit"
+                btnClass="btn btn__primary"
+              />
+              {
+                message && <Notification type={type} message={message}/>
+              } 
+            </form>
+        </div>
+      </Modal>
       <Modal title="Filtre" isActive={showModal} closeFunction={()=>setShowModal(!showModal)}>
         <form className={styles.form__filter}>
           <p>Prix</p>
@@ -178,7 +355,7 @@ const Index = () => {
                 <img src={Language.src} alt="language" />
               </button>
             </li>
-            <li className={styles.nav__item}>
+            <li className={styles.nav__item} onClick={activeModalAccount}>
               <button>
                 <ul>
                   <li>
