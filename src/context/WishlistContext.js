@@ -8,6 +8,10 @@ export const WishlistContextProvider = ({ children }) => {
 
   const [wishlist, setWishlist] = useState([]);
 
+  useEffect(() => {
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  }, [wishlist]);
+  
   const removePlaceWishlist = (place) => {
     if(wishlist.indexOf(place) != -1){
       wishlist.splice(wishlist.indexOf(place),1);
@@ -16,8 +20,8 @@ export const WishlistContextProvider = ({ children }) => {
     
   }
   const addPlaceWishlist = (place) => {
-    if(wishlist.indexOf(place) == -1){
-        setWishlist([...wishlist, place])
+    if(wishlist.findIndex((item) => item._id === place._id) == -1){
+      setWishlist([...wishlist, place])
     }
   }
 

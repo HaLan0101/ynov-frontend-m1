@@ -13,5 +13,10 @@ export default {
       return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/place/filter/${filter}`, {
         method: "GET"
       }).then(res => res.json())
+    },
+    getPlace(id){
+      return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/place/${id}`, {
+        method: "GET"
+      }).then(res => res.json())
     }
 }

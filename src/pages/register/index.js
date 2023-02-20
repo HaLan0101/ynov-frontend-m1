@@ -5,8 +5,11 @@ import Input from '../../components/Input';
 import TitlePage from '../../components/TitlePage';
 import styles from "./index.module.scss";
 import authService from '../../services/auth.service';
+import Notification from "../../components/Notification";
 const Index = () => {
   const router = useRouter();
+  const [message, setMessage] = useState(null);
+  const [type, setType] = useState(null);
   const [userForm, setUserForm] = useState({
     firstName: "",
     lastName: "",
@@ -22,14 +25,19 @@ const Index = () => {
   const submitForm = (e) => {
     e.preventDefault(e);
     authService.register(userForm)
-    .then(user => {
-      localStorage.setItem('token',JSON.stringify(user.token));
+    .then((user) => {
       if(!user.token){
-        console.log(err);
+          setMessage("Vérifiez votre identifiant et mot de passe");
+          setType("error")
+          return false;
       }
-      router.push(`/login`);
+      localStorage.setItem('token',user.token);
+      router.push("/profil");
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      console.log(err);
+      setMessage(err);
+    })
   }
 
   return (
@@ -84,10 +92,10 @@ const Index = () => {
           type="submit"
           btnClass="btn btn__primary"
         />
+        {
+          message && <Notification type={type} message={message}/>
+        } 
       </form>
-      <p>
-        {userForm.firstName} {userForm.lastName}
-      </p>
     </div>
   );
 }

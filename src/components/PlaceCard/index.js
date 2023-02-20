@@ -1,24 +1,31 @@
 import { useContext,useState } from "react";
+import { useRouter } from 'next/router';
 import styles from "./index.module.scss";
-import HearthIcon from "../../../public/heart-light.svg";
-import HearthIconClick from "../../../public/heart-fill.svg";
+import HeartIcon from "../../../public/heart-light.svg";
+import HeartIconClick from "../../../public/heart-fill.svg";
 import WishlistContext from "../../context/WishlistContext";
 import Star from "../../../public/star.svg";
 const Index = ({ place }) => {
-  const [heart, setHeart] = useState(HearthIcon.src);
+  const [heart, setHeart] = useState(HeartIcon.src);
   const { addPlaceWishlist } = useContext(WishlistContext);
   const { removePlaceWishlist } = useContext(WishlistContext);
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/place/"+place._id);
+  };
   const toggleHeart = () =>{
-    if(heart === HearthIcon.src){
-      setHeart(HearthIconClick.src)
+    if(heart === HeartIcon.src){
+      setHeart(HeartIconClick.src)
     }
     else{
-      setHeart(HearthIcon.src)
+      setHeart(HeartIcon.src)
     }
   }
   
   return (
     <div className={styles.wrapper}>
+      <div className={styles.overlay} onClick={handleClick}></div>
       <div className={styles.thumbnail__wrapper}>
         <button
           className={styles.btn__whishlist}

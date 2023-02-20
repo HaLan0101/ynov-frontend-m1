@@ -99,11 +99,11 @@ const Index = () => {
     setShowModalAccount(!showModalAccount);
     setShowModalRegister(true);
   }
-
   const activeModalAccount = (e) =>{
     setShowModalAccount(true);
   }
 
+  
   useEffect(() => {
     typePlaceService.getTypePlaces()
       .then((typePlace) => {
@@ -147,26 +147,38 @@ const Index = () => {
     e.preventDefault(e);
     AuthService.register(userFormRegister)
     .then((user) => {
-      localStorage.setItem('token',JSON.stringify(user.token));
+      localStorage.setItem('token',user.token);
       if(!user.token){
-        setMessage("error");
+        setMessage("Vérifiez votre identifiant et mot de passe");
         setType("error")
         return false;
       }
       setShowModalRegister(!showModalRegister);
-      router.push(`/login`);
+      router.push(`/profil`);
     })
     .catch(err => {
       console.log(err);
       setMessage(err);
     })
   }
+  const logout= () =>{
+    localStorage.removeItem('token');
+    router.push("/");
+  }
   return (
     <header className={styles.header}>
-      <ModalAccount title="Filtre" isActive={showModalAccount} closeFunction={()=>setShowModalAccount(!showModalAccount)}>
-        <p className={styles.modalAccount} onClick={activeModalRegister}>Inscription</p>
-        <p className={styles.modalAccount} onClick={activeModalLogin}>Connexion</p>
-      </ModalAccount>
+        {/* <ModalAccount title="Filtre" isActive={showModalAccount} closeFunction={()=>setShowModalAccount(!showModalAccount)}>
+            <p className={styles.modalAccount}><Link href="/profil">Profil</Link></p>
+            <p className={styles.modalAccount}>Mes favoris</p>
+            <p className={styles.modalAccount} onClick={logout}>Déconnecter</p>
+          </ModalAccount>  */}
+          <ModalAccount title="Filtre" isActive={showModalAccount} closeFunction={()=>setShowModalAccount(!showModalAccount)}>
+            <p className={styles.modalAccount} onClick={activeModalRegister}>Inscription</p>
+            <p className={styles.modalAccount} onClick={activeModalLogin}>Connexion</p>
+            <p className={styles.modalAccount}><Link href="/profil">Profil</Link></p>
+            <p className={styles.modalAccount}><Link href="/wishlist">Mes favoris</Link></p>
+            {/* <p className={styles.modalAccount} onClick={logout}>Déconnecter</p> */}
+          </ModalAccount> 
       <Modal title="Connexion" isActive={showModalLogin} closeFunction={()=>setShowModalLogin(!showModalLogin)}>
           <div className="page__login">
           <form className={styles.form__login}>

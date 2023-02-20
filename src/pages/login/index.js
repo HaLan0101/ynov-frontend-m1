@@ -26,7 +26,7 @@ const Index = () => {
     AuthService.login(userForm)
       .then((data) => {
         if (!data.token) {
-          setMessage(data.message);
+          setMessage("Vérifiez votre identifiant et mot de passe");
           setType("error")
           return false;
         } 
