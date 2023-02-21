@@ -38,41 +38,43 @@ const Index = () => {
   const [search, setSearch] = useState("");
   const [typePlaces, setTypePlaces] = useState();
   const [filter, setFilter] = useState({
-    prixMax:"",
-    prixMin:"",
-    capaciteMax:"",
-    capaciteMin:"",
-    type:""
+    priceMax:"",
+    priceMin:"",
+    capacityMax:"",
+    capacityMin:"",
+    types:""
   });
   const submitForm = (e) =>{
-    if(filter.capaciteMax == "" && filter.capaciteMin == "" && filter.type == "")
+    e.preventDefault();
+    if(filter.capacityMax == "" && filter.capacityMin == "" && filter.types == "")
     {
-      router.push({ pathname: "/filter", query: { "price": `${filter.prixMin}-${filter.prixMax}`} });
+      router.push({ pathname: "/filter/places", query: { "priceMin": `${filter.priceMin}`, "priceMax":`${filter.priceMax}`} });
     }
-    else if(filter.prixMax == "" && filter.prixMin == "" && filter.type == "")
+    else if(filter.priceMax == "" && filter.priceMin == "" && filter.types == "")
     {
-      router.push({ pathname: "/filter", query: { "capacity": `${filter.capaciteMin}-${filter.capaciteMax}`} });
+      router.push({ pathname: "/filter/places", query: { "capacityMin": `${filter.capacityMin}`, "capacityMax":`${filter.capacityMax}`} });
     }
-    else if(filter.prixMax =="" && filter.prixMin == "" && filter.capaciteMax == "" && filter.capaciteMin == "")
+    else if(filter.priceMax =="" && filter.priceMin == "" && filter.capacityMax == "" && filter.capacityMin == "")
     {
-      router.push({ pathname: "/filter", query: { "types": `${filter.type}`} });
+      router.push({ pathname: "/filter/places", query: { "types": `${filter.types}`} });
     }
-    else if(filter.prixMax == "" && filter.prixMin == "")
+    else if(filter.priceMax == "" && filter.priceMin == "")
     {
-      router.push({ pathname: "/filter", query: { "capacity": `${filter.capaciteMin}-${filter.capaciteMax}`, "types": `${filter.type}`} });
+      router.push({ pathname: "/filter/places", query: { "capacityMin": `${filter.capacityMin}`, "capacityMax":`${filter.capacityMax}`, "types": `${filter.types}`} });
     }
-    else if(filter.capaciteMax == "" && filter.capaciteMin == "")
+    else if(filter.capacityMax == "" && filter.capacityMin == "")
     {
-      router.push({ pathname: "/filter", query: { "price": `${filter.prixMin}-${filter.prixMax}`, "types": `${filter.type}`} });
+      router.push({ pathname: "/filter/places", query: { "priceMin": `${filter.priceMin}`, "priceMax":`${filter.priceMax}`, "types": `${filter.types}`} });
     }
-    else if(filter.type == "")
+    else if(filter.types == "")
     {
-      router.push({ pathname: "/filter", query: { "price": `${filter.prixMin}-${filter.prixMax}`, "capacity": `${filter.capaciteMin}-${filter.capaciteMax}`} });
+      router.push({ pathname: "/filter/places", query: { "priceMin": `${filter.priceMin}`, "priceMax":`${filter.priceMax}`, "capacityMin": `${filter.capacityMin}`, "capacityMax":`${filter.capacityMax}`} });
     }
-    else if(filter.prixMax !="" && filter.prixMin != "" && filter.capaciteMax != "" && filter.capaciteMin != "" && filter.type != "")
+    else if(filter.priceMax !="" && filter.priceMin != "" && filter.capacityMax != "" && filter.capacityMin != "" && filter.types != "")
     {
-      router.push({ pathname: "/filter", query: { "price": `${filter.prixMin}-${filter.prixMax}`, "capacity": `${filter.capaciteMin}-${filter.capaciteMax}`, "types": `${filter.type}`} });
+      router.push({ pathname: "/filter/places", query: { "priceMin": `${filter.priceMin}`, "priceMax":`${filter.priceMax}`, "capacityMin": `${filter.capacityMin}`, "capacityMax":`${filter.capacityMax}`, "types": `${filter.types}`} });
     }
+    setShowModal(false);
   }
 
   const handleFilter = (e) => {
@@ -281,8 +283,8 @@ const Index = () => {
               titleLabel="Min"
               inputType="number"
               inputPlaceholder="Valeur minimum"
-              inputName="prixMin"
-              inputValue={filter.prixMin || ""}
+              inputName="priceMin"
+              inputValue={filter.priceMin || ""}
               inputOnChange={(e) => {
                 handleFilter(e);
               }}
@@ -291,8 +293,8 @@ const Index = () => {
               titleLabel="Max"
               inputType="number"
               inputPlaceholder="Valeur maximum"
-              inputName="prixMax"
-              inputValue={filter.prixMax || ""}
+              inputName="priceMax"
+              inputValue={filter.priceMax || ""}
               inputOnChange={(e) => {
                 handleFilter(e);
               }}
@@ -304,8 +306,8 @@ const Index = () => {
               titleLabel="Min"
               inputType="number"
               inputPlaceholder="Valeur minimum"
-              inputName="capaciteMin"
-              inputValue={filter.capaciteMin || ""}
+              inputName="capacityMin"
+              inputValue={filter.capacityMin || ""}
               inputOnChange={(e) => {
                 handleFilter(e);
               }}
@@ -314,8 +316,8 @@ const Index = () => {
               titleLabel="Max"
               inputType="number"
               inputPlaceholder="Valeur maximum"
-              inputName="capaciteMax"
-              inputValue={filter.capaciteMax || ""}
+              inputName="capacityMax"
+              inputValue={filter.capacityMax || ""}
               inputOnChange={(e) => {
                 handleFilter(e);
               }}
@@ -323,7 +325,7 @@ const Index = () => {
           </div>
           <p>Type</p>
           <div className={styles.form__input}>
-            <select name="type" id="" value={filter.type || ""} onChange={(e) => handleFilter(e)}>
+            <select name="types" id="" value={filter.types || ""} onChange={(e) => handleFilter(e)}>
               <option value="">Type</option>
               {
                 typePlaces && typePlaces.map((item) => (

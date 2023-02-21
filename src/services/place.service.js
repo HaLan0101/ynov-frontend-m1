@@ -10,7 +10,7 @@ export default {
       }).then(res => res.json())
     },
     getFilter(filter) {
-      return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/place/filter/${filter}`, {
+      return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/place/filter/places?${filter}`, {
         method: "GET"
       }).then(res => res.json())
     },
