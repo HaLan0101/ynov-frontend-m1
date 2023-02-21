@@ -21,7 +21,6 @@ const Index = () => {
     const token = localStorage.getItem('token');
     userService.updateUser(token, userForm)
     .then(user => {
-      console.log(user);
       setShowModal(false);
       setUser(user);
     })
@@ -34,7 +33,6 @@ const Index = () => {
     const token = localStorage.getItem('token');
     userService.getMe(token)
       .then((user) => {
-        console.log(user);
         setUserForm(user);
         setUser(user);
       })
