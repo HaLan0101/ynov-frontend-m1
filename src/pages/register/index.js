@@ -90,7 +90,7 @@ const Index = () => {
             submitForm(e)
           }}
           type="submit"
-          btnClass="btn btn__primary"
+          btnClass="btn__pink"
         />
         {
           message && <Notification type={type} message={message}/>

@@ -24,6 +24,7 @@ const Index = () => {
   const [showModalRegister,setShowModalRegister]= useState(false);
   const [showModalAccount,setShowModalAccount]= useState(false);
   const [showModalAccountAuth,setShowModalAccountAuth]= useState(false);
+  const [showModalAccountAuthOwner,setShowModalAccountAuthOwner]= useState(false);
   const router = useRouter();
   const [type, setType] = useState(null);
   const [message, setMessage] = useState(null);
@@ -112,8 +113,16 @@ const Index = () => {
     }
     else{
       console.log("login already")
-      setShowModalAccountAuth(true);
-      setShowModalAccount(false);
+      if(user.type === "OWNER"){
+        setShowModalAccountAuthOwner(true);
+        setShowModalAccountAuth(false);
+        setShowModalAccount(false);
+      }
+      else{
+        setShowModalAccountAuth(true);
+        setShowModalAccount(false);
+        setShowModalAccountAuthOwner(false);
+      }
     }
   }
   useEffect(() => {
@@ -186,23 +195,28 @@ const Index = () => {
   }
   const logout= () =>{
     localStorage.removeItem('token');
-    router.replace("/").then(() => router.reload());;
+    router.replace("/").then(() => router.reload());
     setShowModalAccountAuth(false);
   }
   return (
     <header className={styles.header}>
-      <ModalAccount title="Filtre" isActive={showModalAccountAuth} closeFunction={()=>setShowModalAccountAuth(!showModalAccountAuth)}>
+      <ModalAccount title="Account" isActive={showModalAccountAuth} closeFunction={()=>setShowModalAccountAuth(!showModalAccountAuth)}>
         <p className={styles.modalAccount}><Link href="/profil">Profil</Link></p>
         <p className={styles.modalAccount}><Link href="/wishlist">Mes favoris</Link></p>
         <p className={styles.modalAccount} onClick={logout}>Déconnecter</p>
       </ModalAccount> 
+
+      <ModalAccount title="Account" isActive={showModalAccountAuthOwner} closeFunction={()=>setShowModalAccountAuthOwner(!showModalAccountAuthOwner)}>
+        <p className={styles.modalAccount}><Link href="/profil">Profil</Link></p>
+        <p className={styles.modalAccount}><Link href="/wishlist">Mes favoris</Link></p>
+        <p className={styles.modalAccount}><Link href="/myPlaces">Mes annonces</Link></p>
+        <p className={styles.modalAccount}><Link href="/">Créer une annonce</Link></p>
+        <p className={styles.modalAccount} onClick={logout}>Déconnecter</p>
+      </ModalAccount> 
     
-      <ModalAccount title="Filtre" isActive={showModalAccount} closeFunction={()=>setShowModalAccount(!showModalAccount)}>
+      <ModalAccount title="Account" isActive={showModalAccount} closeFunction={()=>setShowModalAccount(!showModalAccount)}>
         <p className={styles.modalAccount} onClick={activeModalRegister}>Inscription</p>
         <p className={styles.modalAccount} onClick={activeModalLogin}>Connexion</p>
-        {/* <p className={styles.modalAccount}><Link href="/profil">Profil</Link></p>
-        <p className={styles.modalAccount}><Link href="/wishlist">Mes favoris</Link></p> */}
-        {/* <p className={styles.modalAccount} onClick={logout}>Déconnecter</p> */}
       </ModalAccount> 
       <Modal title="Connexion" isActive={showModalLogin} closeFunction={()=>setShowModalLogin(!showModalLogin)}>
           <div className="page__login">
@@ -233,7 +247,7 @@ const Index = () => {
                 submitFormLogin(e);
               }}
               type="submit"
-              btnClass="btn btn__primary"
+              btnClass="btn__pink"
             />
             {
               message && <Notification type={type} message={message}/>
@@ -290,7 +304,7 @@ const Index = () => {
                   submitFormRegister(e)
                 }}
                 type="submit"
-                btnClass="btn btn__primary"
+                btnClass="btn__pink"
               />
               {
                 message && <Notification type={type} message={message}/>
@@ -364,7 +378,7 @@ const Index = () => {
                 submitForm(e)
               }}
               type="submit"
-              btnClass="btn btn__primary"
+              btnClass="btn__pink"
             />
           </div>
         </form>

@@ -13,7 +13,7 @@ const Index = (props) => {
                                 <Button 
                                 title="x" 
                                 type="button" 
-                                btnClass="btn btn__white" 
+                                btnClass="btn__pink" 
                                 handleClick={props.closeFunction}></Button>
                             </div>
                             <h2>{props.title}</h2>

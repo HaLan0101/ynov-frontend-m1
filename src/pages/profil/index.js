@@ -40,7 +40,7 @@ const Index = () => {
   }, []);
   const logout=() =>{
     localStorage.removeItem('token');
-    router.push("/");
+    router.replace("/").then(() => router.reload());
   }
   return (
     <>
@@ -85,7 +85,7 @@ const Index = () => {
                 <Button
                   title="Modifier"
                   type="submit"
-                  btnClass="btn btn__white"
+                  btnClass="btn__black"
                 />
               </form>
             </Modal>
@@ -96,9 +96,9 @@ const Index = () => {
               title="Modifier"
               handleClick={(e) => showPopUp(e)}
               type="button"
-              btnClass="btn btn__primary"
+              btnClass="btn__pink"
             />
-            <Button title="Logout" type="button" btnClass="btn btn__black" handleClick={() => logout()}></Button>
+            <Button title="Logout" type="button" btnClass="btn__black" handleClick={() => logout()}></Button>
           </div>
         </>
       )

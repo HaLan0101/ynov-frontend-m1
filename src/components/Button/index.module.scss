@@ -3,6 +3,8 @@
     font-size: 15px;
     display: inline-block;
     transition: 0.3s all;
+    padding: 10px 40px;
+    margin: 5px;
     &__black {
         background: black;
         color: white;
@@ -15,6 +17,16 @@
     &__white {
         background: white;
         color: black;
+        &:hover {
+            background: black;
+            color: white;
+            border: 1px solid white;
+        }
+    }
+    &__pink {
+        background: #FF385C;
+        color: white;
+        border: 1px solid white;
         &:hover {
             background: black;
             color: white;

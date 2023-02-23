@@ -18,5 +18,13 @@ export default {
       return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/place/${id}`, {
         method: "GET"
       }).then(res => res.json())
+    },
+    getMyPlaces(token){
+      return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/place/myPlaces/get/`, {
+        method: "GET",
+        headers: {
+          "authorization":token
+        }
+      }).then(res => res.json())
     }
 }

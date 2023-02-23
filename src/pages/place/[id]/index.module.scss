@@ -1,5 +1,12 @@
 .product{
+    &__detail{
+    }
     &__header{
+        position: relative;
+        top: 200px;
+        z-index: 9;
+    }
+    &__description{
         position: relative;
         top: 200px;
         z-index: 9;
