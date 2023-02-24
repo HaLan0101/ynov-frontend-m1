@@ -2,4 +2,9 @@
     position: absolute;
     top: 30%;
     width: 100%;
+    .form__place{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+    }
 }

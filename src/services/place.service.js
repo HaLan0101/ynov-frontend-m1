@@ -35,6 +35,16 @@ export default {
         }
       }).then(res => res.json())
     },
+    createPlace(token, place) {
+      return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/place`, {
+        method: "POST",
+        headers: {
+          "Authorization": token,
+          "Content-type":"Application/json"
+        },
+        body: JSON.stringify(place)
+      }).then(res => res.json())
+    },
     updatePlace(token, place, id) {
       return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/place/${id}`, {
         method: "PUT",

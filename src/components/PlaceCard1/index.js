@@ -164,7 +164,7 @@ const Index = ({ place }) => {
               inputName="lat"
               inputValue={placeForm.address.gps.lat}
               inputOnChange={(e) => {
-                setPlaceForm({ ...placeForm, address:{...placeForm.address.gps, lat: e.target.value }});
+                setPlaceForm({ ...placeForm, address:{...placeForm.address, gps: {...placeForm.address.gps, lat : e.target.value} }});
               }}
             />
             <Input
@@ -174,7 +174,7 @@ const Index = ({ place }) => {
               inputName="long"
               inputValue={placeForm.address.gps.long}
               inputOnChange={(e) => {
-                setPlaceForm({ ...placeForm, address:{...placeForm.address.gps, long: e.target.value }});
+                setPlaceForm({ ...placeForm, address:{...placeForm.address, gps: {...placeForm.address.gps, long : e.target.value} }});
               }}
             />
             <select name="types" id="" value={placeForm.types} onChange={(e) => setPlaceForm({...placeForm, types:e.target.value})}>

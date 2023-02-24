@@ -19,7 +19,6 @@ const Index = () => {
 
   const handleInput = (e) => {
     setUserForm({ ...userForm, [e.target.name]: e.target.value })
-    //userForm pour dire garder les éléments précédents dans useState
   }
 
   const submitForm = (e) => {
