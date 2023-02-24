@@ -2,16 +2,13 @@
     width: 95%;
     height: 220px;
     display: flex;
-    position: relative;
     border-radius: 20px;
     background-color: rgb(234, 230, 230);
     margin-bottom: 30px;
-    .overlay{
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        z-index: 2;
-        border-radius: 20px;
+    .form__place{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
     }
     .thumbnail__wrapper {
         background: lightgray;
@@ -20,8 +17,16 @@
         border-radius: 20px;
         margin-bottom: 15px;
         overflow: hidden;
+        position: relative;
         img {
             width: 100%;
+        }
+        .overlay{
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: 2;
+            border-radius: 20px;
         }
     }
     .content {

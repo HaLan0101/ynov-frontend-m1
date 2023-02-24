@@ -19,7 +19,7 @@ const Index = (props) => {
                             <h2>{props.title}</h2>
                         </div>
                         <hr />
-                        <div className="modal__content">{props.children}</div>
+                        <div className={styles.modal__content}>{props.children}</div>
                     </div>
                 </>
             ) : (

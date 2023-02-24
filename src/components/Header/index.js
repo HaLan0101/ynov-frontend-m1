@@ -139,7 +139,6 @@ const Index = () => {
   useEffect(() => {
     typePlaceService.getTypePlaces()
       .then((typePlace) => {
-        console.log(typePlace);
         setTypePlaces(typePlace);
       })
       .catch(err => console.log(err))
