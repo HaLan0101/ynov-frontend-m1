@@ -1,3 +1,29 @@
 .container {
     padding: 20px;
 }
+.header {
+    position: fixed;
+    background-color: white;
+    z-index: 999;
+    width: 100%;
+    padding: 15px 0px;
+    &__main {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-bottom: 1px solid #e2e1e1ab;
+        padding-bottom: 20px;
+    }
+    &__logo {
+        img {
+            width: 120px;
+            padding-right: 90px;
+        }
+    }
+    &__page{
+        display: flex;
+        h2{
+            padding: 20px;
+        }
+    }
+}

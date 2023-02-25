@@ -3,17 +3,15 @@ import { useRouter } from 'next/router';
 import TitlePage from "../../components/TitlePage";
 import placeService from "../../services/place.service";
 import styles from "./index.module.scss";
-import WithAuth from '../../HOC/WithAuth';
-import userService from '../../services/user.service';
 import PlaceCard1 from "../../components/PlaceCard1";
 import Button from '../../components/Button';
 import Modal from "../../components/Modal";
 import Input from "../../components/Input";
 import typePlaceService from "../../services/typePlace.service";
+import WithOwner from '../../HOC/WithOwner';
 const Index = () => {
     const router = useRouter();
     const [places, setPlaces] = useState();
-    const [owner, setOwner] = useState();
     const [typePlaces, setTypePlaces] = useState();
     const [placeForm, setPlaceForm] = useState({
       title: "",
@@ -43,8 +41,7 @@ const Index = () => {
       placeService.createPlace(token, placeForm)
       .then(place => {
         setShowModal(false);
-        router.push("/myPlaces");
-        //router.replace("/myPlaces").then(() => router.reload());
+        router.replace("/myPlaces").then(() => router.reload());
       })
       .catch(err => {
         console.log(err);
@@ -60,19 +57,6 @@ const Index = () => {
       .catch(err => console.log(err))
     }, []);
     useEffect(() => {
-      const token = localStorage.getItem('token');
-      userService.getMe(token)
-        .then((user) => {
-          if(user.type == "OWNER"){
-            setOwner(user);
-          }
-          else{
-            router.push("/");
-          }
-        })
-        .catch(err => console.log(err))
-    }, []);
-    useEffect(() => {
       typePlaceService.getTypePlaces()
         .then((typePlace) => {
           setTypePlaces(typePlace);
@@ -81,9 +65,6 @@ const Index = () => {
     }, []);
   return (
     <>
-    {
-      owner && (
-        <>
           <div className={styles.myPlaces}>
                 <Modal isActive={showModal} closeFunction={()=>setShowModal(!showModal)}>
                   <TitlePage title="Créer une annonce"/>
@@ -209,10 +190,8 @@ const Index = () => {
                 }
               </div>
           </div>
-        </>
-    )
-    }
+        
   </>
   )
 }
-export default WithAuth(Index);
+export default WithOwner(Index);

@@ -31,7 +31,7 @@ const Index = () => {
           return false;
       }
       localStorage.setItem('token',user.token);
-      router.push("/profil");
+      router.replace("/profil").then(() => router.reload());
     })
     .catch(err => {
       console.log(err);

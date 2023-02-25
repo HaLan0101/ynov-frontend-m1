@@ -25,6 +25,8 @@ const Index = () => {
   const [showModalAccount,setShowModalAccount]= useState(false);
   const [showModalAccountAuth,setShowModalAccountAuth]= useState(false);
   const [showModalAccountAuthOwner,setShowModalAccountAuthOwner]= useState(false);
+  const [showModalAccountAuthAdmin,setShowModalAccountAuthAdmin]= useState(false);
+  const [showModalRegisterOwner,setShowModalRegisterOwner]= useState(false);
   const router = useRouter();
   const [type, setType] = useState(null);
   const [message, setMessage] = useState(null);
@@ -36,7 +38,8 @@ const Index = () => {
     firstName: "",
     lastName: "",
     email: "",
-    password: ""
+    password: "",
+    type : ""
   })
   const { wishlist } = useContext(WishlistContext);
   const [search, setSearch] = useState("");
@@ -107,14 +110,18 @@ const Index = () => {
   }
   const activeModalAccount = (e) =>{
     if(!user){
-      console.log("not login yet")
       setShowModalAccount(true);
       setShowModalAccountAuth(false);
     }
     else{
-      console.log("login already")
       if(user.type === "OWNER"){
         setShowModalAccountAuthOwner(true);
+        setShowModalAccountAuth(false);
+        setShowModalAccount(false);
+      }
+      else if(user.isAdmin == true){
+        setShowModalAccountAuthAdmin(true);
+        setShowModalAccountAuthOwner(false);
         setShowModalAccountAuth(false);
         setShowModalAccount(false);
       }
@@ -124,6 +131,10 @@ const Index = () => {
         setShowModalAccountAuthOwner(false);
       }
     }
+  }
+
+  const activeModalRegisterOwner = (e) =>{
+      setShowModalRegisterOwner(true)
   }
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -160,7 +171,17 @@ const Index = () => {
         } 
         localStorage.setItem('token', data.token);
         setShowModalLogin(!showModalLogin);
-        router.replace("/profil").then(() => router.reload());;
+        const token = localStorage.getItem('token');
+        userService.getMe(token)
+          .then((user) => {
+            if (user.isAdmin == false) {
+              router.replace("/profil").then(() => router.reload());
+            }
+            else{
+              router.replace("/admin/users").then(() => router.reload());
+            }
+          })
+          .catch(err => console.log(err))
       })
       .catch(
         (err) => {
@@ -185,7 +206,7 @@ const Index = () => {
         return false;
       }
       setShowModalRegister(!showModalRegister);
-      router.replace("/profil").then(() => router.reload());;
+      router.replace("/profil").then(() => router.reload());
     })
     .catch(err => {
       console.log(err);
@@ -200,16 +221,22 @@ const Index = () => {
   return (
     <header className={styles.header}>
       <ModalAccount title="Account" isActive={showModalAccountAuth} closeFunction={()=>setShowModalAccountAuth(!showModalAccountAuth)}>
-        <p className={styles.modalAccount}><Link href="/profil">Profil</Link></p>
-        <p className={styles.modalAccount}><Link href="/wishlist">Mes favoris</Link></p>
+        <p className={styles.modalAccount}><Link href="/profil" style={{ textDecoration: 'none', color: 'black'}}>Profil</Link></p>
+        <p className={styles.modalAccount}><Link href="/wishlist" style={{ textDecoration: 'none', color: 'black'}}>Mes favoris</Link></p>
+        <p className={styles.modalAccount} onClick={logout}>Déconnecter</p>
+      </ModalAccount> 
+
+      <ModalAccount title="Account" isActive={showModalAccountAuthAdmin} closeFunction={()=>setShowModalAccountAuthAdmin(!showModalAccountAuthAdmin)}>
+        <p className={styles.modalAccount}><Link href="/profil" style={{ textDecoration: 'none', color: 'black'}}>Profil</Link></p>
+        <p className={styles.modalAccount}><Link href="/admin/users" style={{ textDecoration: 'none', color: 'black'}}>Admin Page</Link></p>
         <p className={styles.modalAccount} onClick={logout}>Déconnecter</p>
       </ModalAccount> 
 
       <ModalAccount title="Account" isActive={showModalAccountAuthOwner} closeFunction={()=>setShowModalAccountAuthOwner(!showModalAccountAuthOwner)}>
-        <p className={styles.modalAccount}><Link href="/profil">Profil</Link></p>
-        <p className={styles.modalAccount}><Link href="/wishlist">Mes favoris</Link></p>
-        <p className={styles.modalAccount}><Link href="/myPlaces">Mes annonces</Link></p>
-        <p className={styles.modalAccount}><Link href="/">Créer une annonce</Link></p>
+        <p className={styles.modalAccount}><Link href="/profil" style={{ textDecoration: 'none', color: 'black'}}>Profil</Link></p>
+        <p className={styles.modalAccount}><Link href="/wishlist" style={{ textDecoration: 'none', color: 'black'}}>Mes favoris</Link></p>
+        <p className={styles.modalAccount}><Link href="/myPlaces" style={{ textDecoration: 'none', color: 'black'}}>Mes annonces</Link></p>
+        <p className={styles.modalAccount}><Link href="/myPlaces" style={{ textDecoration: 'none', color: 'black'}}>Créer une annonce</Link></p>
         <p className={styles.modalAccount} onClick={logout}>Déconnecter</p>
       </ModalAccount> 
     
@@ -254,6 +281,73 @@ const Index = () => {
           </form>
         </div>
       </Modal>
+      <Modal title="Inscription Owner" isActive={showModalRegisterOwner} closeFunction={()=>setShowModalRegisterOwner(!showModalRegisterOwner)}>
+          <div className='page__register'>
+            <form className={styles.form__register}>
+              <Input
+                titleLabel="Firstname"
+                inputType="text"
+                inputPlaceholder="firstname"
+                inputName="firstName"
+                inputValue={userFormRegister.firstName || ""}
+                inputOnChange={(e) => {
+                  handleInputRegister(e);
+                }}
+              />
+              <Input
+                titleLabel="Lastname"
+                inputType="text"
+                inputPlaceholder="lastname"
+                inputName="lastName"
+                inputValue={userFormRegister.lastName || ""}
+                inputOnChange={(e) => {
+                  handleInputRegister(e);
+                }}
+              />
+              <Input
+                titleLabel="Email"
+                inputType="email"
+                inputPlaceholder="email"
+                inputName="email"
+                inputValue={userFormRegister.email || ""}
+                inputOnChange={(e) => {
+                  handleInputRegister(e);
+                }}
+              />
+              <Input
+                titleLabel="Password"
+                inputType="password"
+                inputPlaceholder="password"
+                inputName="password"
+                inputValue={userFormRegister.password || ""}
+                inputOnChange={(e) => {
+                  handleInputRegister(e);
+                }}
+              />
+              <Input
+                titleLabel=""
+                inputType="hidden"
+                inputPlaceholder=""
+                inputName="type"
+                inputValue= "OWNER"
+                inputOnChange={(e) => {
+                  handleInputRegister(e);
+                }}
+              />
+              <Button
+                title="submit"
+                handleClick={(e) => {
+                  submitFormRegister(e)
+                }}
+                type="submit"
+                btnClass="btn__pink"
+              />
+              {
+                message && <Notification type={type} message={message}/>
+              } 
+            </form>
+        </div>
+      </Modal>
       <Modal title="Inscription" isActive={showModalRegister} closeFunction={()=>setShowModalRegister(!showModalRegister)}>
           <div className='page__register'>
             <form className={styles.form__register}>
@@ -293,6 +387,16 @@ const Index = () => {
                 inputPlaceholder="password"
                 inputName="password"
                 inputValue={userFormRegister.password || ""}
+                inputOnChange={(e) => {
+                  handleInputRegister(e);
+                }}
+              />
+              <Input
+                titleLabel=""
+                inputType="hidden"
+                inputPlaceholder=""
+                inputName="type"
+                inputValue= "CUSTOMER"
                 inputOnChange={(e) => {
                   handleInputRegister(e);
                 }}
@@ -397,7 +501,7 @@ const Index = () => {
         </div>
         <div className={styles.header__menu}>
           <ul className={styles.nav__list}>
-            <li className={styles.nav__item}>
+            <li className={styles.nav__item} onClick={activeModalRegisterOwner}>
               <button>Mettre mon logement sur Airbnb</button>
             </li>
             <li className={styles.nav__item}>

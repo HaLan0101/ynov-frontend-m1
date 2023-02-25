@@ -7,7 +7,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import Notification from "../../components/Notification";
 import styles from "./index.module.scss";
-
+import userService from '../../services/user.service';
 const Index = () => {
   const router = useRouter();
   const [message, setMessage] = useState(null);
@@ -31,7 +31,17 @@ const Index = () => {
           return false;
         } 
         localStorage.setItem('token', data.token);
-        router.push("/profil");
+        const token = localStorage.getItem('token');
+        userService.getMe(token)
+          .then((user) => {
+            if (user.isAdmin == false) {
+              router.replace("/profil").then(() => router.reload());
+            }
+            else{
+              router.replace("/admin/users").then(() => router.reload());
+            }
+          })
+          .catch(err => console.log(err))
       })
       .catch(
         (err) => {
