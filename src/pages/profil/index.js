@@ -12,6 +12,9 @@ const Index = () => {
   const [userForm, setUserForm] = useState();
   const [showModal,setShowModal]= useState(false);
   const [user, setUser] = useState();
+  const [beOwner, setBeOwner] = useState({
+    type: "OWNER"
+  }, [user]);
   const handleInput = (e) => {
     setUserForm({ ...userForm, [e.target.name]: e.target.value })
     //userForm pour dire garder les éléments précédents dans useState
@@ -23,6 +26,18 @@ const Index = () => {
     .then(user => {
       setShowModal(false);
       setUser(user);
+    })
+    .catch(err => console.log(err))
+  }
+
+  const submitOwner = (e) => {
+    e.preventDefault(e);
+    const token = localStorage.getItem('token');
+    console.log("here type:" + beOwner.type)
+    userService.updateUser(token, beOwner)
+    .then(user => {
+      setUser(user);
+      router.replace("/profil").then(() => router.reload());
     })
     .catch(err => console.log(err))
   }
@@ -98,7 +113,8 @@ const Index = () => {
               type="button"
               btnClass="btn__pink"
             />
-            <Button title="Logout" type="button" btnClass="btn__black" handleClick={() => logout()}></Button>
+            <Button title="Se déconnecter" type="button" btnClass="btn__black" handleClick={() => logout()}></Button>
+            <Button title="Etre proprietaire" type="button" btnClass="btn__white" handleClick={(e) => submitOwner(e)}></Button>
           </div>
         </>
       )

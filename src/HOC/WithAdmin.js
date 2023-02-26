@@ -10,12 +10,12 @@ const WithAdmin = (WrappedComponent) => {
             const token = localStorage.getItem('token');
             userService.getMe(token)
             .then((user) => {
-            if (user.isAdmin == false) {
-                setIsAmin(false);
-                router.push('/login');
+            if (user.isAdmin == true) {
+                setIsAmin(true);
             }
             else {
-                setIsAmin(true)
+                setIsAmin(false);
+                router.push('/login');
             }})
 
         }, []);

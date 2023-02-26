@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
+import userService from '../services/user.service';
 const WithAuth = (WrappedComponent) => {
     return () => {
         const router = useRouter();
@@ -8,13 +8,15 @@ const WithAuth = (WrappedComponent) => {
 
         useEffect(() => {
             const token = localStorage.getItem('token');
-            if (!token) {
-                setIsLogged(false);
-                router.push('/login');
+            userService.getMe(token)
+            .then((user) => {
+            if (user.type == "OWNER" || user.type == "CUSTOMER" || user.idAmin == true) {
+                setIsLogged(true);
             }
             else {
-                setIsLogged(true)
-            }
+                setIsLogged(false);
+                router.push('/login');
+            }})
 
         }, []);
         if (isLogged) {

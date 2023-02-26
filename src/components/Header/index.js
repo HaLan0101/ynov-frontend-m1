@@ -38,8 +38,14 @@ const Index = () => {
     firstName: "",
     lastName: "",
     email: "",
+    password: ""
+  })
+  const [userFormRegisterOwner, setUserFormRegisterOwner] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
     password: "",
-    type : ""
+    type: "OWNER"
   })
   const { wishlist } = useContext(WishlistContext);
   const [search, setSearch] = useState("");
@@ -118,6 +124,7 @@ const Index = () => {
         setShowModalAccountAuthOwner(true);
         setShowModalAccountAuth(false);
         setShowModalAccount(false);
+        setShowModalAccountAuthAdmin(false);
       }
       else if(user.isAdmin == true){
         setShowModalAccountAuthAdmin(true);
@@ -125,10 +132,17 @@ const Index = () => {
         setShowModalAccountAuth(false);
         setShowModalAccount(false);
       }
-      else{
+      else if(user.type === "CUSTOMER"){
         setShowModalAccountAuth(true);
         setShowModalAccount(false);
         setShowModalAccountAuthOwner(false);
+        setShowModalAccountAuthAdmin(false);
+      }
+      else{
+        setShowModalAccountAuth(false);
+        setShowModalAccount(true);
+        setShowModalAccountAuthOwner(false);
+        setShowModalAccountAuthAdmin(false);
       }
     }
   }
@@ -213,6 +227,29 @@ const Index = () => {
       setMessage(err);
     })
   }
+
+  const handleInputRegisterOwner = (e) => {
+    setUserFormRegisterOwner({ ...userFormRegisterOwner, [e.target.name]: e.target.value })
+  }
+
+  const submitFormRegisterOwner = (e) => {
+    e.preventDefault(e);
+    AuthService.register(userFormRegisterOwner)
+    .then((user) => {
+      localStorage.setItem('token',user.token);
+      if(!user.token){
+        setMessage("Vérifiez votre identifiant et mot de passe");
+        setType("error")
+        return false;
+      }
+      setShowModalRegister(!showModalRegisterOwner);
+      router.replace("/profil").then(() => router.reload());
+    })
+    .catch(err => {
+      console.log(err);
+      setMessage(err);
+    })
+  }
   const logout= () =>{
     localStorage.removeItem('token');
     router.replace("/").then(() => router.reload());
@@ -289,9 +326,9 @@ const Index = () => {
                 inputType="text"
                 inputPlaceholder="firstname"
                 inputName="firstName"
-                inputValue={userFormRegister.firstName || ""}
+                inputValue={userFormRegisterOwner.firstName || ""}
                 inputOnChange={(e) => {
-                  handleInputRegister(e);
+                  handleInputRegisterOwner(e);
                 }}
               />
               <Input
@@ -299,9 +336,9 @@ const Index = () => {
                 inputType="text"
                 inputPlaceholder="lastname"
                 inputName="lastName"
-                inputValue={userFormRegister.lastName || ""}
+                inputValue={userFormRegisterOwner.lastName || ""}
                 inputOnChange={(e) => {
-                  handleInputRegister(e);
+                  handleInputRegisterOwner(e);
                 }}
               />
               <Input
@@ -309,9 +346,9 @@ const Index = () => {
                 inputType="email"
                 inputPlaceholder="email"
                 inputName="email"
-                inputValue={userFormRegister.email || ""}
+                inputValue={userFormRegisterOwner.email || ""}
                 inputOnChange={(e) => {
-                  handleInputRegister(e);
+                  handleInputRegisterOwner(e);
                 }}
               />
               <Input
@@ -319,25 +356,15 @@ const Index = () => {
                 inputType="password"
                 inputPlaceholder="password"
                 inputName="password"
-                inputValue={userFormRegister.password || ""}
+                inputValue={userFormRegisterOwner.password || ""}
                 inputOnChange={(e) => {
-                  handleInputRegister(e);
-                }}
-              />
-              <Input
-                titleLabel=""
-                inputType="hidden"
-                inputPlaceholder=""
-                inputName="type"
-                inputValue= "OWNER"
-                inputOnChange={(e) => {
-                  handleInputRegister(e);
+                  handleInputRegisterOwner(e);
                 }}
               />
               <Button
                 title="submit"
                 handleClick={(e) => {
-                  submitFormRegister(e)
+                  submitFormRegisterOwner(e)
                 }}
                 type="submit"
                 btnClass="btn__pink"
@@ -387,16 +414,6 @@ const Index = () => {
                 inputPlaceholder="password"
                 inputName="password"
                 inputValue={userFormRegister.password || ""}
-                inputOnChange={(e) => {
-                  handleInputRegister(e);
-                }}
-              />
-              <Input
-                titleLabel=""
-                inputType="hidden"
-                inputPlaceholder=""
-                inputName="type"
-                inputValue= "CUSTOMER"
                 inputOnChange={(e) => {
                   handleInputRegister(e);
                 }}

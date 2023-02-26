@@ -10,12 +10,12 @@ const WithOwner = (WrappedComponent) => {
             const token = localStorage.getItem('token');
             userService.getMe(token)
             .then((user) => {
-            if (user.type == "CUSTOMER") {
-                setIsOwner(false);
-                router.push('/login');
+            if (user.type == "OWNER") {
+                setIsOwner(true);
             }
             else {
-                setIsOwner(true)
+                setIsOwner(false);
+                router.push('/login');
             }})
 
         }, []);
