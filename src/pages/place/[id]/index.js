@@ -133,7 +133,7 @@ const Index = () => {
                   titleLabel="Départ"
                   inputType="date"
                   inputPlaceholder="from"
-                  inputName="from"
+                  inputName="dateStart"
                   // inputValue={userForm.email || ""}
                   // inputOnChange={(e) => {
                   //   handleInput(e);
@@ -143,7 +143,7 @@ const Index = () => {
                   titleLabel="Arrivée"
                   inputType="date"
                   inputPlaceholder="to"
-                  inputName="to"
+                  inputName="dateEnd"
                   // inputValue={userForm.password || ""}
                   // inputOnChange={(e) => {
                   //   handleInput(e);
