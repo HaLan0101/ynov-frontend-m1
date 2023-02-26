@@ -1,14 +1,112 @@
 .product{
     &__detail{
+        position: absolute;
+        top: 30%;
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: 100px;
     }
     &__header{
-        position: relative;
-        top: 200px;
-        z-index: 9;
+        h1{
+            font-size: 40px;
+            font-weight: 600;
+        }
+        &__info{
+            display: flex;
+            justify-content: space-between;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            .nav{
+                &__list{
+                    display: flex;
+                }
+                &__item{
+                    display: flex;
+                    align-items: center;
+                    padding-right: 30px;
+                    img{
+                        width: 30%;
+                    }
+                }
+                &__decor{
+                    font-weight: 600;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+    &__image{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+        img{
+            width: 100%;
+        }
     }
     &__description{
-        position: relative;
-        top: 200px;
-        z-index: 9;
+        display: flex;
+        padding-top: 50px;
+        &__top{
+            display: flex;
+            padding-bottom: 10px;
+            h2{
+                font-size: 30px;
+                padding-right: 30px;
+                font-weight: 600;
+            }
+        }
+        &__info{
+            padding-bottom: 10px;
+            .nav{
+                &__list{
+                    display: flex;
+                }
+                &__item{
+                    padding-right: 20px;
+                }
+            }
+        }
+        &__detail{
+            .detail{
+                display: flex;
+                align-items: center;
+                padding-bottom: 50px;
+                padding-top: 30px;
+            }
+            .nav__decor{
+                font-weight: 600;
+                padding-bottom: 10px;
+            }
+        }
+        &__airCover{
+            padding-top: 30px;
+            img{
+                width: 20%;
+                padding-bottom: 20px;
+            }
+            p{
+                font-size: 15px;
+                padding-bottom: 15px;
+                
+            }
+            .nav__decor{
+                font-weight: 600;
+                text-decoration: underline;
+            }
+        }
+        &__right{
+        }
+        &__reservation{
+            width: 500px;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            .product__price{
+                font-weight: 600;
+            }
+            .form__reservation{
+                padding-top: 20px;
+            }
+        }
     }
 }
