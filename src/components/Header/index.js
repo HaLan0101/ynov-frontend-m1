@@ -27,6 +27,19 @@ const Index = () => {
   const [showModalAccountAuthOwner,setShowModalAccountAuthOwner]= useState(false);
   const [showModalAccountAuthAdmin,setShowModalAccountAuthAdmin]= useState(false);
   const [showModalRegisterOwner,setShowModalRegisterOwner]= useState(false);
+  const [beOwner, setBeOwner] = useState({
+    type: "OWNER"
+  });
+  const submitOwner = (e) => {
+    e.preventDefault(e);
+    const token = localStorage.getItem('token');
+    userService.updateUser(token, beOwner)
+    .then(user => {
+      setUser(user);
+      router.replace("/profil").then(() => router.reload());
+    })
+    .catch(err => console.log(err))
+  }
   const router = useRouter();
   const [type, setType] = useState(null);
   const [message, setMessage] = useState(null);
@@ -95,10 +108,15 @@ const Index = () => {
   }
 
   const handleInput = (e) => {
-    setSearch(e.target.value);
+      setSearch(e.target.value);
   }
   const onClickSubmit = (e) => {
-    router.push({ pathname: "/search", query: { "search": `${search}` } });
+    if(search){
+      router.push({ pathname: "/search", query: { "search": `${search}` } });
+    }
+    else{
+      router.push("/")
+    }
   }
 
   const activeModal = (e) =>{
@@ -261,6 +279,7 @@ const Index = () => {
         <p className={styles.modalAccount}><Link href="/profil" style={{ textDecoration: 'none', color: 'black'}}>Profil</Link></p>
         <p className={styles.modalAccount}><Link href="/wishlist" style={{ textDecoration: 'none', color: 'black'}}>Mes favoris</Link></p>
         <p className={styles.modalAccount}><Link href="/myBookings" style={{ textDecoration: 'none', color: 'black'}}>Mes réservation</Link></p>
+        <p className={styles.modalAccount} onClick={(e) => submitOwner(e)}>Etre proprietaire</p>
         <p className={styles.modalAccount} onClick={logout}>Déconnecter</p>
       </ModalAccount> 
 

@@ -45,7 +45,6 @@ const Index = () => {
       })
       .catch(err => {
         console.log(err);
-        setMessage(err);
       })
     }
     useEffect(() => {

@@ -1,8 +1,9 @@
 import {useEffect, useState,useContext} from 'react';
 import { useRouter } from "next/router";
 import placeService from '../../../services/place.service';
+import bookingService from '../../../services/booking.service';
 import styles from "./index.module.scss";
-import HeartIcon from "../../../../public/heart-light.svg";
+import HeartIcon from "../../../../public/heart-light1.svg";
 import HeartIconClick from "../../../../public/heart-fill.svg";
 import WishlistContext from "../../../context/WishlistContext";
 import Star from "../../../../public/star.svg";
@@ -13,11 +14,42 @@ import Door from "../../../../public/door.svg";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 const Index = () => {
-  // const [heart, setHeart] = useState(HeartIcon.src);
+  const [heart, setHeart] = useState(HeartIcon.src);
   const router = useRouter();
+  const { addPlaceWishlist } = useContext(WishlistContext);
+  const { removePlaceWishlist } = useContext(WishlistContext);
   const [place, setPlace] = useState();
-  // const { addPlaceWishlist } = useContext(WishlistContext);
-  // const { removePlaceWishlist } = useContext(WishlistContext);
+  const [bookingForm, setBookingForm] = useState({});
+  useEffect(() => {
+    if (place) {
+      setBookingForm({
+        dateStart: "",
+        dateEnd: "",
+        quantity: "",
+        owner: `${place.place.owner._id}`,
+        place: `${place.place._id}`
+      });
+    }
+  }, [place]);
+  const handleInput = (e) => {
+    setBookingForm({ ...bookingForm, [e.target.name]: e.target.value })
+  }
+  const submitForm = (e) => {
+    e.preventDefault(e);
+    const token = localStorage.getItem('token');
+    console.log("date start: "+ bookingForm.dateStart);
+    console.log("date end: "+ bookingForm.dateEnd);
+    console.log("quanity: "+ bookingForm.quantity);
+    console.log("place: "+ bookingForm.place);
+    console.log("owner: "+ bookingForm.owner);
+    bookingService.createBooking(token, bookingForm)
+    .then(booking => {
+      router.replace("/myBookings").then(() => router.reload());
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
 
   useEffect(() => {
     if (router.isReady) {
@@ -27,14 +59,14 @@ const Index = () => {
   }
   }, [router.isReady])
 
-  // const toggleHeart = () =>{
-  //   if(heart === HeartIcon.src){
-  //     setHeart(HeartIconClick.src)
-  //   }
-  //   else{
-  //     setHeart(HeartIcon.src)
-  //   }
-  // }
+  const toggleHeart = () =>{
+    if(heart === HeartIcon.src){
+      setHeart(HeartIconClick.src)
+    }
+    else{
+      setHeart(HeartIcon.src)
+    }
+  }
 
   return (
     place && (
@@ -61,7 +93,18 @@ const Index = () => {
                   <p className={styles.nav__decor}>Partager</p>
                 </li>
                 <li className={styles.nav__item}>
-                    <img src={HeartIconClick.src} alt="favoris" />
+                    <button
+                      className={styles.btn__whishlist}
+                      onClick={
+                        () => {
+                          addPlaceWishlist(place.place);
+                          removePlaceWishlist(place.place);
+                          toggleHeart()
+                        }
+                      }
+                    >
+                      <img src={heart} alt="favoris" />
+                    </button>
                     <p className={styles.nav__decor}>Entregistrer</p>
                 </li>
               </ul>
@@ -82,7 +125,7 @@ const Index = () => {
             </div>  
             <div className={styles.product__description__info}>
               <ul className={styles.nav__list}>
-                <li className={styles.nav__item}>{place.capacity} voyageurs</li>
+                <li className={styles.nav__item}>{place.place.capacity} voyageurs</li>
                 <li className={styles.nav__item}>2 chambres</li>
                 <li className={styles.nav__item}>2 lits</li>
                 <li className={styles.nav__item}>2 sallle de bain et 1 toilette</li>
@@ -127,43 +170,65 @@ const Index = () => {
           </div>
           <div className={styles.product__decription__right}>
             <div className={styles.product__description__reservation}>
-              <div className={styles.product__price}>{place.price} € par nuit</div>
-              <form className={styles.form__reservation}>
+              <div className={styles.product__price}>{place.place.price} € par nuit</div>
+              <form className={styles.form__reservation} onSubmit={(e) => submitForm(e)}>
                 <Input
                   titleLabel="Départ"
                   inputType="date"
                   inputPlaceholder="from"
                   inputName="dateStart"
-                  // inputValue={userForm.email || ""}
-                  // inputOnChange={(e) => {
-                  //   handleInput(e);
-                  // }}
+                  inputValue={bookingForm.dateStart || ""}
+                  inputOnChange={(e) => {
+                    handleInput(e);
+                  }}
+                  //inputOnChange={(e) => setBookingForm({...bookingForm, dateStart:e.target.value})}
                 />
                 <Input
                   titleLabel="Arrivée"
                   inputType="date"
                   inputPlaceholder="to"
                   inputName="dateEnd"
-                  // inputValue={userForm.password || ""}
-                  // inputOnChange={(e) => {
-                  //   handleInput(e);
-                  // }}
+                  inputValue={bookingForm.dateEnd || ""}
+                  inputOnChange={(e) => {
+                    handleInput(e);
+                  }}
+                  //inputOnChange={(e) => setBookingForm({...bookingForm, dateEnd:e.target.value})}
                 />
                 <Input
                   titleLabel="Voyageurs"
                   inputType="number"
                   inputPlaceholder="quantity"
                   inputName="quantity"
-                  // inputValue={userForm.password || ""}
+                  inputValue={bookingForm.quantity || ""}
+                  inputOnChange={(e) => {
+                    handleInput(e);
+                  }}
+                  //inputOnChange={(e) => setBookingForm({...bookingForm, quantity:e.target.value})}
+                />
+                {/* <Input
+                  titleLabel="Owner"
+                  inputType="text"
+                  inputPlaceholder="owner"
+                  inputName="owner"
+                  inputValue={place.place.owner._id}
                   // inputOnChange={(e) => {
                   //   handleInput(e);
                   // }}
+                  //inputOnChange={(e) => setBookingForm({...bookingForm, owner:e.target.value})}
                 />
+                <Input
+                  titleLabel="Place"
+                  inputType="text"
+                  inputPlaceholder="place"
+                  inputName="place"
+                  inputValue={place.place._id}
+                  // inputOnChange={(e) => {
+                  //   handleInput(e);
+                  // }}
+                  //inputOnChange={(e) => setBookingForm({...bookingForm, place:e.target.value})}
+                /> */}
                 <Button
                   title="Réserver"
-                  // handleClick={(e) => {
-                  //   submitForm(e);
-                  // }}
                   type="submit"
                   btnClass="btn__pink"
                 />
