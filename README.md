@@ -19,9 +19,10 @@ Admin :
 Password : Test.1234
 
 Les fonctionnalités faites :
+
 L’application Airbnb selon le scope suivant :
 
--Sur la home page afficher toutes les annonces sous forme de cards
+-Sur la home page, toutes les annonces sous forme de cards
 
 -Le header une barre de recherche qui permet de rechercher une annonce sur
 -> le titre
@@ -54,13 +55,14 @@ En tant qu’utilisateur inscrit et connecté:
 En tant qu’utilisateur inscrit et connecté :
 
     -> Consulter et modifier mon profil
-    -> je peux faire une demande de réservation pour un lieu en renseignant une date de début et de fin
+    -> Faire une demande de réservation pour un lieu en renseignant une date de début et de fin
     -> Ajouter des lieux dans sa liste de favoris
 
 Back office :
 
-    - Un back office pour les utilisateurs de type admin.
+- Un back office pour les utilisateurs de type admin.
 
 En tant qu’admin connecté :
-    -> Je peux consulter la liste de tous les utilisateurs
-    -> Je peux consulter toutes les demandes de réservations
+
+    -> Consulter la liste de tous les utilisateurs
+    -> Consulter toutes les demandes de réservations
