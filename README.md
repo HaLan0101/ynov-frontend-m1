@@ -1,5 +1,23 @@
 Nom de l'élève : DANG Ngoc Ha Lan
 
+Les comptes pour tester :
+
+Owner :
+
+- ownerDang@gmail.com
+- owner1Dang@gmail.com
+
+Customer :
+
+- customer1Dang@gmail.com
+- customerDang@gmail.com
+
+Admin :
+
+- adminDang@gmail.com
+
+Password : Test.1234
+
 Les fonctionnalités faites :
 L’application Airbnb selon le scope suivant :
 
@@ -21,7 +39,7 @@ L’application Airbnb selon le scope suivant :
 
 Deux type de comptes :
 
-    - Propriétaire (owner) :
+- Propriétaire (owner) :
 
 En tant qu’utilisateur inscrit et connecté:
 
@@ -31,7 +49,7 @@ En tant qu’utilisateur inscrit et connecté:
     -> Consulter les demandes de réservation pour chaque annonce
     -> Accepter ou refuser une demande de réservation
 
-    - Loueur (customer) :
+- Loueur (customer) :
 
 En tant qu’utilisateur inscrit et connecté :
 

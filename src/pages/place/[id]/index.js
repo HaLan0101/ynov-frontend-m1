@@ -37,11 +37,6 @@ const Index = () => {
   const submitForm = (e) => {
     e.preventDefault(e);
     const token = localStorage.getItem('token');
-    console.log("date start: "+ bookingForm.dateStart);
-    console.log("date end: "+ bookingForm.dateEnd);
-    console.log("quanity: "+ bookingForm.quantity);
-    console.log("place: "+ bookingForm.place);
-    console.log("owner: "+ bookingForm.owner);
     bookingService.createBooking(token, bookingForm)
     .then(booking => {
       router.replace("/myBookings").then(() => router.reload());
@@ -181,7 +176,6 @@ const Index = () => {
                   inputOnChange={(e) => {
                     handleInput(e);
                   }}
-                  //inputOnChange={(e) => setBookingForm({...bookingForm, dateStart:e.target.value})}
                 />
                 <Input
                   titleLabel="Arrivée"
@@ -192,7 +186,6 @@ const Index = () => {
                   inputOnChange={(e) => {
                     handleInput(e);
                   }}
-                  //inputOnChange={(e) => setBookingForm({...bookingForm, dateEnd:e.target.value})}
                 />
                 <Input
                   titleLabel="Voyageurs"
@@ -203,30 +196,8 @@ const Index = () => {
                   inputOnChange={(e) => {
                     handleInput(e);
                   }}
-                  //inputOnChange={(e) => setBookingForm({...bookingForm, quantity:e.target.value})}
                 />
-                {/* <Input
-                  titleLabel="Owner"
-                  inputType="text"
-                  inputPlaceholder="owner"
-                  inputName="owner"
-                  inputValue={place.place.owner._id}
-                  // inputOnChange={(e) => {
-                  //   handleInput(e);
-                  // }}
-                  //inputOnChange={(e) => setBookingForm({...bookingForm, owner:e.target.value})}
-                />
-                <Input
-                  titleLabel="Place"
-                  inputType="text"
-                  inputPlaceholder="place"
-                  inputName="place"
-                  inputValue={place.place._id}
-                  // inputOnChange={(e) => {
-                  //   handleInput(e);
-                  // }}
-                  //inputOnChange={(e) => setBookingForm({...bookingForm, place:e.target.value})}
-                /> */}
+                
                 <Button
                   title="Réserver"
                   type="submit"
