@@ -53,14 +53,14 @@ En tant qu’utilisateur inscrit et connecté:
 
 En tant qu’utilisateur inscrit et connecté :
 
--> Consulter et modifier mon profil
--> je peux faire une demande de réservation pour un lieu en renseignant une date de début et de fin
--> Ajouter des lieux dans sa liste de favoris
+    -> Consulter et modifier mon profil
+    -> je peux faire une demande de réservation pour un lieu en renseignant une date de début et de fin
+    -> Ajouter des lieux dans sa liste de favoris
 
 Back office :
 
     - Un back office pour les utilisateurs de type admin.
 
 En tant qu’admin connecté :
--> Je peux consulter la liste de tous les utilisateurs
--> Je peux consulter toutes les demandes de réservations
+    -> Je peux consulter la liste de tous les utilisateurs
+    -> Je peux consulter toutes les demandes de réservations
