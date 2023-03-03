@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import { useRouter } from 'next/router';
 import TitlePage from "../../components/TitlePage";
-import placeService from "../../services/place.service";
 import bookingService from "../../services/booking.service";
 import styles from "./index.module.scss";
 import Link from "next/link";

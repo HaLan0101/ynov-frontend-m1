@@ -18,17 +18,23 @@ const Index = () => {
   }, []);
   return (
     <>
+    {
+      bookings && (
+        <>
         <div className={styles.myBookings}>
-          <TitlePage title="Liste des réservations"/>
-          <div className={styles.grid}>
-            {
-              bookings && bookings.map((item) => (
-                <BookingCard key={item._id} booking={item} />
-              ))
-            }
-          </div>
+            <TitlePage title="Liste des réservations"/>
+            <div className={styles.grid}>
+                {
+                bookings.bookings && bookings.bookings.map((item) => (
+                    <BookingCard key={item._id} booking={item} />
+                ))
+                }
+            </div>
         </div>
-    </>
+        </>
+      )
+    }
+    </>     
   );
 }
 
