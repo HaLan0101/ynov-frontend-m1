@@ -77,12 +77,12 @@ const Index = () => {
         <div className={styles.product__description}>
           <div className={styles.product__description__left}>
             <div className={styles.product__description__top}>
-              <h2>Type : {place.typePlace.name}</h2>
-              <h2>Chez : {place.user.firstName} {place.user.lastName} </h2>
+              <h2>Type : {place.place.types.name}</h2>
+              <h2>Chez : {place.place.owner.firstName} {place.place.owner.lastName} </h2>
             </div>  
             <div className={styles.product__description__info}>
               <ul className={styles.nav__list}>
-                <li className={styles.nav__item}>{place.place.capacity} voyageurs</li>
+                <li className={styles.nav__item}>{place.capacity} voyageurs</li>
                 <li className={styles.nav__item}>2 chambres</li>
                 <li className={styles.nav__item}>2 lits</li>
                 <li className={styles.nav__item}>2 sallle de bain et 1 toilette</li>
@@ -111,7 +111,7 @@ const Index = () => {
                <div className={styles.detail}>
                   <img src={Medal.src} alt="medal" />
                   <div>
-                    <p className={styles.nav__decor}>{place.user.lastName} est Superhôte</p>
+                    <p className={styles.nav__decor}>{place.place.owner.lastName} est Superhôte</p>
                     <p>
                     Les Superhôtes sont des hôtes expérimentés qui bénéficient de très bonnes évaluations et qui s'engagent à offrir d'excellents séjours aux voyageurs.
                     </p>
@@ -127,7 +127,7 @@ const Index = () => {
           </div>
           <div className={styles.product__decription__right}>
             <div className={styles.product__description__reservation}>
-              <div className={styles.product__price}>{place.place.price} € par nuit</div>
+              <div className={styles.product__price}>{place.price} € par nuit</div>
               <form className={styles.form__reservation}>
                 <Input
                   titleLabel="Départ"

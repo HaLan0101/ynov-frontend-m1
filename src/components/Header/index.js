@@ -260,6 +260,7 @@ const Index = () => {
       <ModalAccount title="Account" isActive={showModalAccountAuth} closeFunction={()=>setShowModalAccountAuth(!showModalAccountAuth)}>
         <p className={styles.modalAccount}><Link href="/profil" style={{ textDecoration: 'none', color: 'black'}}>Profil</Link></p>
         <p className={styles.modalAccount}><Link href="/wishlist" style={{ textDecoration: 'none', color: 'black'}}>Mes favoris</Link></p>
+        <p className={styles.modalAccount}><Link href="/myBookings" style={{ textDecoration: 'none', color: 'black'}}>Mes réservation</Link></p>
         <p className={styles.modalAccount} onClick={logout}>Déconnecter</p>
       </ModalAccount> 
 
@@ -274,6 +275,8 @@ const Index = () => {
         <p className={styles.modalAccount}><Link href="/wishlist" style={{ textDecoration: 'none', color: 'black'}}>Mes favoris</Link></p>
         <p className={styles.modalAccount}><Link href="/myPlaces" style={{ textDecoration: 'none', color: 'black'}}>Mes annonces</Link></p>
         <p className={styles.modalAccount}><Link href="/myPlaces" style={{ textDecoration: 'none', color: 'black'}}>Créer une annonce</Link></p>
+        <p className={styles.modalAccount}><Link href="/myBookings" style={{ textDecoration: 'none', color: 'black'}}>Mes réservation</Link></p>
+        <p className={styles.modalAccount}><Link href="/myBookingsOwner" style={{ textDecoration: 'none', color: 'black'}}>Mes places réservées</Link></p>
         <p className={styles.modalAccount} onClick={logout}>Déconnecter</p>
       </ModalAccount> 
     

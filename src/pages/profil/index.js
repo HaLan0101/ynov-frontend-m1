@@ -33,7 +33,6 @@ const Index = () => {
   const submitOwner = (e) => {
     e.preventDefault(e);
     const token = localStorage.getItem('token');
-    console.log("here type:" + beOwner.type)
     userService.updateUser(token, beOwner)
     .then(user => {
       setUser(user);

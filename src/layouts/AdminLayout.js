@@ -22,7 +22,7 @@ const Index = ({ children }) => {
           </div>
           <div className={styles.header__page}>
               <h2><Link href="/admin/users" style={{ textDecoration: 'none', color: 'black'}}>Users</Link></h2>
-              <h2>Reservations</h2>
+              <h2><Link href="/admin/bookings" style={{ textDecoration: 'none', color: 'black'}}>Reservations</Link></h2>
           </div>
           <div className={styles.header__logout}>
             <h2 onClick={logout}>Logout</h2>

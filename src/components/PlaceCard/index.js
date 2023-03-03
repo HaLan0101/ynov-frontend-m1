@@ -44,7 +44,6 @@ const Index = ({ place }) => {
         <img src={item} key={item}/>
         ))
         }
-        {/* <img src={place.images} alt={place.title} /> */}
       </div>
       <div className={styles.content}>
         <div className={styles.metadata}>

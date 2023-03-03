@@ -28,7 +28,7 @@ export default {
       }).then(res => res.json())
     },
     getMyPlace(token, id){
-      return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/place/myPlaces/${id}`, {
+      return fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/place/myPlace/${id}`, {
         method: "GET",
         headers: {
           "authorization":token
