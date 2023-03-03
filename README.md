@@ -25,8 +25,9 @@ L’application Airbnb selon le scope suivant :
 -Sur la home page, toutes les annonces sous forme de cards
 
 -Le header une barre de recherche qui permet de rechercher une annonce sur
--> le titre
--> la description
+
+    -> le titre
+    -> la description
 
 -Une barre de filtre avec les critères suivants :
 
